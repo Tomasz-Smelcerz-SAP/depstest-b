@@ -5,9 +5,18 @@ import (
 )
 
 type Container struct {
-	elements []component.Component
+	Elements []component.Component
+}
+
+func (c *Container) Visit(visitor func(*component.Component) error) error {
+	for i := range c.Elements {
+		if err := visitor(&c.Elements[i]); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 type ContainerSet struct {
-	containers []Container
+	Containers []Container
 }
